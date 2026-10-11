@@ -6,18 +6,18 @@ const newQuote = document.querySelector("#new-quote");
 
 const loader = document.querySelector(".loader");
 
-function loading() {
+function showLoadingSpinner() {
     loader.classList.remove("hidden");
     quoteContainer.classList.add("hidden");
 }
 
-function complete() {
+function removeLoadingSpinner() {
     loader.classList.add("hidden");
     quoteContainer.classList.remove("hidden");
 }
 
 async function getQuote() {
-    loading();
+    showLoadingSpinner();
 
     try {
         const response = await fetch(
@@ -51,9 +51,10 @@ async function getQuote() {
 
         quote.innerText = data.quote;
 
-        complete();
+        removeLoadingSpinner();
     } catch (error) {
         console.log(error);
+        getQuote();
     }
 }
 getQuote();
